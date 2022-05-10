@@ -5,8 +5,10 @@ import express from "express";
 // Use Temporal.PlainDate instead. See /test/date_conversion.spec.mjs for examples.
 
 function convertDate(date) {
-  if (date) {
+  if (date instanceof Date) {
     return new Temporal.PlainDate(date.getFullYear(), date.getMonth(), date.getDay())
+  } else {
+    return date;
   }
 }
 
