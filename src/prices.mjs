@@ -6,8 +6,7 @@ import express from "express";
 
 function convertDate(date) {
   if (date) {
-    const date2 = new Temporal.PlainDate(date.getFullYear(), date.getMonth(), date.getDay())
-    return date2;
+    return new Temporal.PlainDate(date.getFullYear(), date.getMonth(), date.getDay())
   }
 }
 
@@ -91,9 +90,12 @@ function createApp(database) {
     const holidays = database.getHolidays();
     for (let row of holidays) {
       let holiday = new Date(row.holiday);
+      let holiday2 = convertDate(holiday);
+      let date2 = convertDate(date);
       if (
-        date &&
+        date && date2 &&
         date.getFullYear() === holiday.getFullYear() &&
+        date2.year === holiday2.year &&
         date.getMonth() === holiday.getMonth() &&
         date.getDate() === holiday.getDate()
       ) {
