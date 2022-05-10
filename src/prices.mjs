@@ -6,7 +6,9 @@ import express from "express";
 
 function convertDate(date) {
   if (date instanceof Date) {
-    return new Temporal.PlainDate(date.getFullYear(), date.getMonth(), date.getDay())
+    return date.toTemporalInstant()
+    .toZonedDateTimeISO("UTC")
+    .toPlainDate()
   } else {
     return date;
   }
@@ -93,13 +95,15 @@ function createApp(database) {
     for (let row of holidays) {
       let holiday = new Date(row.holiday);
       let holiday2 = convertDate(holiday);
+      console.log('holiday', holiday)
+      console.log('holiday2', holiday2)
       let date2 = convertDate(date);
       if (
         date2 &&
         date2.year === holiday2.year &&
         date2.month === holiday2.month &&
         date.getDate() === holiday.getDate() &&
-        date2.date === holiday2.date
+        date2.day === holiday2.day
       ) {
         return true;
       }
