@@ -95,15 +95,10 @@ function createApp(database) {
     for (let row of holidays) {
       let holiday = new Date(row.holiday);
       let holiday2 = convertDate(holiday);
-      console.log('holiday', holiday)
-      console.log('holiday2', holiday2)
       let date2 = convertDate(date);
       if (
         date2 &&
-        date2.year === holiday2.year &&
-        date2.month === holiday2.month &&
-        date.getDate() === holiday.getDate() &&
-        date2.day === holiday2.day
+        date2.equals(holiday2) 
       ) {
         return true;
       }
